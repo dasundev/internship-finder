@@ -1,7 +1,8 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import LoginForm
+from .forms import *
 
 
 def user_login(request):
@@ -10,15 +11,34 @@ def user_login(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
-            email = form.cleaned_data['email']
+            username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user = authenticate(email=email, password=password)
+            user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
                 return redirect('home')
-            messages.error(request, "These credentials do not match our records.", 'danger')
+            messages.error(request, "These credentials do not match our records.")
         else:
             form = LoginForm(request.POST)
             return render(request, 'auth/login.html', {'section': section, 'form': form})
 
     return render(request, 'auth/login.html', {'section': section})
+
+
+def user_register(request):
+    section = {'title': 'Register'}
+
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = User.objects.create_user(username, email, password)
+            if user is not None:
+                return redirect('home')
+            else:
+                messages.error(request, "Something went wrong.")
+
+    return render(request, 'auth/register.html', {'section': section})
