@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import *
+from django.contrib.auth.decorators import login_required
 
 
 def user_login(request):
@@ -42,3 +43,15 @@ def user_register(request):
                 messages.error(request, "Something went wrong.")
 
     return render(request, 'auth/register.html', {'section': section})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('login')
+
+
+@login_required(login_url='/login/')
+def home(request):
+    section = {'title': 'Home'}
+
+    return render(request, 'home.html', {'section': section})
