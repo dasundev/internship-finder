@@ -55,3 +55,10 @@ def home(request):
     section = {'title': 'Home'}
 
     return render(request, 'home.html', {'section': section})
+
+
+
+@login_required(login_url='/login/')
+def profile(request):
+    section = {'title': 'Profile'}
+    return render(request, 'profile.html', {'section': section})
