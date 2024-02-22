@@ -55,3 +55,9 @@ def home(request):
     section = {'title': 'Home'}
 
     return render(request, 'home.html', {'section': section})
+
+@login_required(login_url='/login/')
+def add_vacancy(request):
+    section = {'title': 'add_vacancy'}
+
+    return render(request, 'add_vacancy.html', {'section': section})
