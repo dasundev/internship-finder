@@ -20,3 +20,13 @@ class RegisterForm(forms.Form):
             raise forms.ValidationError("This username already taken. please choose another.")
 
         return username
+
+class VacancyForm(forms.Form):
+    vacancy_title = forms.CharField(required=True)
+    description = forms.CharField(required=True)
+    link = forms.URLField(required=True)
+
+
+    
+    
+

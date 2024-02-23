@@ -1,0 +1,58 @@
+{% extends "base_generic.html" %}
+
+{% block title %}{{ section.title }}{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                {% if messages %}
+                    <div class="alert alert-danger">
+                        {% for message in messages %}
+                            {{ message }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Add Vacancy</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="/add_vacancy/" method="post">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="vacancy_title" class="form-label">Vacancy Title</label>
+                                <input type="text" name="vacancy_title"
+                                       class="form-control {% if form.vacancy_title.errors %}is-invalid{% endif %}" id="vacancy_title"
+                                       required>
+                                <span class="invalid-feedback" role="alert">
+                                    {{ form.vacancy_title.errors.0 }}
+                                </span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <input type="description" name="description"
+                                       class="form-control {% if form.description.errors %}is-invalid{% endif %}" id="description"
+                                       required>
+                                <span class="invalid-feedback" role="alert">
+                                    {{ form.description.errors.0 }}
+                                </span>
+                            </div>
+                            <div class="mb-3">
+                                <label for="link" class="form-label">Link</label>
+                                <input type="url" name="link"
+                                       class="form-control {% if form.link.errors %}is-invalid{% endif %}"
+                                       id="link" required>
+                                <span class="invalid-feedback" role="alert">
+                                    {{ form.link.errors.0 }}
+                                </span>
+                            </div>
+                             
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
