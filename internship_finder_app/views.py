@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import VacancyForm
 from .models import Vacancy
+from django.contrib.auth.models import Group
 
 
 
@@ -41,6 +42,19 @@ def user_register(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             user = User.objects.create_user(username, email, password)
+
+            role = form.cleaned_data['role']
+
+            if role == 'student':
+                group = Group.objects.get(name='student')
+            elif role == 'company':
+                group = Group.objects.get(name='company')
+            else:
+                group = None
+
+            if group:
+                user.groups.add(group)
+
             if user is not None:
                 return redirect('home')
             else:
