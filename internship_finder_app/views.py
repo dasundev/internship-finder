@@ -60,6 +60,13 @@ def home(request):
 
     return render(request, 'home.html', {'section': section})
 
+  
+@login_required(login_url='/login/')
+def profile(request):
+    section = {'title': 'Profile'}
+    return render(request, 'profile.html', {'section': section})
+
+  
 @login_required(login_url='/login/')
 def add_vacancy(request):
     section = {'title': 'add_vacancy'}
