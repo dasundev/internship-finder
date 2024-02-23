@@ -4,6 +4,10 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import *
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from .forms import VacancyForm
+from .models import Vacancy
+
 
 
 def user_login(request):
@@ -55,3 +59,23 @@ def home(request):
     section = {'title': 'Home'}
 
     return render(request, 'home.html', {'section': section})
+
+@login_required(login_url='/login/')
+def add_vacancy(request):
+    section = {'title': 'add_vacancy'}
+
+    if request.method == 'POST':
+        form = VacancyForm(request.POST)
+
+        if form.is_valid():
+            vacancy_title = form.cleaned_data['vacancy_title']
+            description = form.cleaned_data['description']
+            link = form.cleaned_data['link']
+            new_vacancy = Vacancy.objects.create(vacancy_title=vacancy_title, description=description, link=link)
+
+            if new_vacancy is not None:
+                return redirect('home')
+            else:
+                messages.error(request, "Something went wrong.")
+
+    return render(request, 'add_vacancy.html', {'section': section})
