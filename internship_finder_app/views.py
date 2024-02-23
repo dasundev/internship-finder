@@ -58,7 +58,12 @@ def user_logout(request):
 def home(request):
     section = {'title': 'Home'}
 
-    return render(request, 'home.html', {'section': section})
+    vacancies = Vacancy.objects.all()
+
+    return render(request, 'home.html', {
+        'section': section,
+        'vacancies': vacancies
+    })
 
   
 @login_required(login_url='/login/')
