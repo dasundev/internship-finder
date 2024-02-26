@@ -27,6 +27,11 @@ class VacancyForm(forms.Form):
     link = forms.URLField(required=True)
 
 
-    
-    
+class ProfileForm(forms.Form):
+    first_name = forms.CharField(required=True)
+    last_name = forms.CharField(required=True)
+    username = forms.URLField(required=True)
+    email = forms.EmailField(required=True)
+    skills = forms.CharField(required=True)
 
+    

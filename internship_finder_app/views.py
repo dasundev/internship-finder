@@ -7,9 +7,12 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import VacancyForm
 from .models import Vacancy
+from .models import Profile
 
 
 
+
+ 
 def user_login(request):
     section = {'title': 'Login'}
 
@@ -51,7 +54,7 @@ def user_register(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('login')
+    return redirect('login') 
 
 
 @login_required(login_url='/login/')
@@ -60,13 +63,31 @@ def home(request):
 
     return render(request, 'home.html', {'section': section})
 
-  
 @login_required(login_url='/login/')
 def profile(request):
     section = {'title': 'Profile'}
-    return render(request, 'profile.html', {'section': section})
 
-  
+    if request.method == 'POST':
+        form = ProfileForm(request.POST)
+
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            skills = form.cleaned_data['skills']
+            other_skills = form.cleaned_data['other_skills']
+
+            user_profile = Profile.objects.create_user(first_name,last_name,username, email,skills,other_skills)
+            if user_profile is not None:
+                return redirect('home')
+            else:
+                messages.error(request, "Something went wrong.")
+
+    return render(request, 'profile.html', {'section': section})
+ 
+
+    
 @login_required(login_url='/login/')
 def add_vacancy(request):
     section = {'title': 'add_vacancy'}
