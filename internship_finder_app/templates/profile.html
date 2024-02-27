@@ -23,32 +23,33 @@
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="first_name" class="form-label">First Name</label>
-                            <input type="text" name="first_name" class="form-control{% if form.first_name.errors %}is-invalid{% endif %}" id="first_name"required>
+                            <input type="text" name="first_name" class="form-control{% if form.first_name.errors %}is-invalid{% endif %}" id="first_name" value="{{user.first_name}}" required>
                             <span class="invalid-feedback" role="alert">
                                 {{ form.first_name.errors.0 }}
                             </span>
                         </div>
                         <div class="mb-3">
                             <label for="last_name" class="form-label">Last Name</label>
-                            <input type="text" name="last_name" class="form-control{% if form.last_name.errors %}is-invalid{% endif %}" id="last_name"required>
+                            <input type="text" name="last_name" class="form-control{% if form.last_name.errors %}is-invalid{% endif %}" id="last_name" value="{{user.last_name}}" required>
                             <span class="invalid-feedback" role="alert">
                                 {{ form.last_name.errors.0 }}
                             </span>
                         </div>
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
-                            <input type="text" name="username" class="form-control{% if form.username.errors %}is-invalid{% endif %}" id="username" required>
+                            <input type="text" name="username" class="form-control{% if form.username.errors %}is-invalid{% endif %}" id="username" value="{{user.username}}" readonly>
                             <span class="invalid-feedback" role="alert">
                                 {{ form.username.errors.0 }}
                             </span>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" name="email" class="form-control{% if form.email.errors %}is-invalid{% endif %}" id="email" required>
+                            <input type="email" name="email" class="form-control{% if form.email.errors %}is-invalid{% endif %}" id="email" value="{{user.email}}" >
                             <span class="invalid-feedback" role="alert">
                                 {{ form.email.errors.0 }}
                             </span>
                         </div>
+                        <!--
                         <div class="mb-3">
                             <label class="form-label">Skills</label>
                             <select name="skills" id="skills" multiple onchange="toggleOtherSkills()" class="form-control">
@@ -75,6 +76,7 @@
                                 {{ form.other_skills.errors.0 }}
                             </span>
                         </div>
+                    -->
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>
                 </div>
@@ -82,7 +84,7 @@
         </div>
     </div>
 </div>
-
+<!--
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
     <script>
@@ -102,5 +104,5 @@
             }
         }
     </script>
-
+-->
 {% endblock %}
