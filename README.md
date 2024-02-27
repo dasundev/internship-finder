@@ -7,12 +7,17 @@
 python manage.py migrate
 ```
 
-2. Creating an admin user
+2. Run auth_groups fixture.
+```bash
+python manage.py loaddata auth_groups.json
+```
+
+3. Creating an admin user
 ```bash
 python manage.py createsuperuser
 ```
 
-3. Run the application
+4. Run the application
 ```bash
 python manage.py runserver
 ```

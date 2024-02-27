@@ -7,7 +7,11 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import VacancyForm,ProfileForm
 from .models import Vacancy,Profile
+from django.contrib.auth.models import Group
 
+
+def welcome(request):
+    return redirect('login')
 
 
 
@@ -44,6 +48,19 @@ def user_register(request):
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
             user = User.objects.create_user(username, email, password)
+
+            role = form.cleaned_data['role']
+
+            if role == 'student':
+                group = Group.objects.get(name='student')
+            elif role == 'company':
+                group = Group.objects.get(name='company')
+            else:
+                group = None
+
+            if group:
+                user.groups.add(group)
+
             if user is not None:
                 return redirect('home')
             else:
@@ -61,7 +78,12 @@ def user_logout(request):
 def home(request):
     section = {'title': 'Home'}
 
-    return render(request, 'home.html', {'section': section})
+    vacancies = Vacancy.objects.all()
+
+    return render(request, 'home.html', {
+        'section': section,
+        'vacancies': vacancies
+    })
 
 @login_required(login_url='/login/')
 def profile(request):

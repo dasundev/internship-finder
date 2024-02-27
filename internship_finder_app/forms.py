@@ -13,6 +13,12 @@ class RegisterForm(forms.Form):
     email = forms.EmailField(required=True)
     password = forms.CharField(required=True)
 
+    ROLE_CHOICES = (
+        ('student', 'Student'),
+        ('company', 'Company'),
+    )
+    role = forms.ChoiceField(choices=ROLE_CHOICES, widget=forms.RadioSelect)
+
     def clean_username(self):
         username = self.cleaned_data['username']
 
