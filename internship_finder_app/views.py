@@ -5,15 +5,14 @@ from django.contrib import messages
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .forms import VacancyForm
+from .forms import VacancyForm,ProfileForm
 from .models import Vacancy
-from django.contrib.auth.models import Group
 
 
-def welcome(request):
-    return redirect('login')
 
 
+
+ 
 def user_login(request):
     section = {'title': 'Login'}
 
@@ -68,7 +67,7 @@ def user_register(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('login')
+    return redirect('login') 
 
 
 @login_required(login_url='/login/')
@@ -82,13 +81,27 @@ def home(request):
         'vacancies': vacancies
     })
 
-  
 @login_required(login_url='/login/')
 def profile(request):
-    section = {'title': 'Profile'}
-    return render(request, 'profile.html', {'section': section})
+    section = {'title': 'profile'}
 
-  
+    user = User.objects.get(id=request.user.id)
+    if request.method == 'POST':
+        form = ProfileForm(request.POST,instance=user)
+
+        if form.is_valid():
+            form.save()
+
+            messages.success(request,"Your profile has been successfully updated!")
+            
+            return redirect('home')
+
+
+    return render(request, 'profile.html',{'section': section})
+
+ 
+
+    
 @login_required(login_url='/login/')
 def add_vacancy(request):
     section = {'title': 'add_vacancy'}

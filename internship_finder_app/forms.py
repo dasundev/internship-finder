@@ -33,6 +33,9 @@ class VacancyForm(forms.Form):
     link = forms.URLField(required=True)
 
 
-    
-    
+class ProfileForm(forms.ModelForm):
 
+    class Meta:
+
+        model = User
+        fields = ['first_name', 'last_name', 'username', 'email']
