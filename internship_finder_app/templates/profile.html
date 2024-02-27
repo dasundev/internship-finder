@@ -64,10 +64,16 @@
                                 <option value="10">UI/UX design</option>
                                 <option value="11">Others</option>
                             </select>
+                            <span class="invalid-feedback" role="alert">
+                                {{ form.skills.errors.0 }}
+                            </span>
                         </div>
                         <div class="mb-3" id="otherSkills" style="display: none;">
                             <label for="otherSkills" class="form-label">Other Skills</label>
                             <input type="text" name="otherSkills" class="form-control" id="otherSkills">
+                            <span class="invalid-feedback" role="alert">
+                                {{ form.other_skills.errors.0 }}
+                            </span>
                         </div>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </form>

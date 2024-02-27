@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-
+from .models import Profile
 
 class LoginForm(forms.Form):
     username = forms.CharField(required=True)
@@ -33,5 +33,9 @@ class ProfileForm(forms.Form):
     username = forms.URLField(required=True)
     email = forms.EmailField(required=True)
     skills = forms.CharField(required=True)
+    skills = forms.CharField(required=True)
+    other_skills=forms.CharField(required=True)
+
+
 
     

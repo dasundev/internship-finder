@@ -5,9 +5,9 @@ from django.contrib import messages
 from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from .forms import VacancyForm
-from .models import Vacancy
-from .models import Profile
+from .forms import VacancyForm,ProfileForm
+from .models import Vacancy,Profile
+
 
 
 
@@ -65,7 +65,7 @@ def home(request):
 
 @login_required(login_url='/login/')
 def profile(request):
-    section = {'title': 'Profile'}
+    section = {'title': 'profile'}
 
     if request.method == 'POST':
         form = ProfileForm(request.POST)
@@ -77,14 +77,16 @@ def profile(request):
             email = form.cleaned_data['email']
             skills = form.cleaned_data['skills']
             other_skills = form.cleaned_data['other_skills']
+            
+            user_profile = Profile.objects.create(first_name=first_name,last_name=last_name,username=username, email=email,skills=skills,other_skills=other_skills)
 
-            user_profile = Profile.objects.create_user(first_name,last_name,username, email,skills,other_skills)
             if user_profile is not None:
                 return redirect('home')
             else:
                 messages.error(request, "Something went wrong.")
 
     return render(request, 'profile.html', {'section': section})
+
  
 
     
