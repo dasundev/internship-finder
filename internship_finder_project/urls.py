@@ -19,6 +19,7 @@ from django.urls import path
 from internship_finder_app import views
 
 urlpatterns = [
+    path('', views.welcome, name='welcome'),
     path('admin/', admin.site.urls),
     path('login/', views.user_login, name='login'),
     path('register/', views.user_register, name='register'),

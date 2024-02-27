@@ -10,6 +10,9 @@ from .models import Vacancy
 from django.contrib.auth.models import Group
 
 
+def welcome(request):
+    return redirect('login')
+
 
 def user_login(request):
     section = {'title': 'Login'}
