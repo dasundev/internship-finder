@@ -6,8 +6,12 @@ from .forms import *
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from .forms import VacancyForm,ProfileForm
-from .models import Vacancy
+from .models import Vacancy,Profile
+from django.contrib.auth.models import Group
 
+
+def welcome(request):
+    return redirect('login')
 
 
 
@@ -85,19 +89,25 @@ def home(request):
 def profile(request):
     section = {'title': 'profile'}
 
-    user = User.objects.get(id=request.user.id)
     if request.method == 'POST':
-        form = ProfileForm(request.POST,instance=user)
+        form = ProfileForm(request.POST)
 
         if form.is_valid():
-            form.save()
-
-            messages.success(request,"Your profile has been successfully updated!")
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            username = form.cleaned_data['username']
+            email = form.cleaned_data['email']
+            skills = form.cleaned_data['skills']
+            other_skills = form.cleaned_data['other_skills']
             
-            return redirect('home')
+            user_profile = Profile.objects.create(first_name=first_name,last_name=last_name,username=username, email=email,skills=skills,other_skills=other_skills)
 
+            if user_profile is not None:
+                return redirect('home')
+            else:
+                messages.error(request, "Something went wrong.")
 
-    return render(request, 'profile.html',{'section': section})
+    return render(request, 'profile.html', {'section': section})
 
  
 
