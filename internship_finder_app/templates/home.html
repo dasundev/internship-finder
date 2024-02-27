@@ -6,33 +6,19 @@
 <div class="container">
     <h2 class="my-4">Job Vacancies</h2>
     <div class="row">
+      {% for vacancy in vacancies %}
       <div class="col-md-12">
         <div class="card mb-4">
           <div class="card-body">
-            <h5 class="card-title">Software Developer</h5>
-            <p class="card-text">We are looking for a skilled software developer with experience in Python and Django framework.</p>
-            <a href="#" class="btn btn-primary btn-sm float-end">Apply Now</a>
+            <h5 class="card-title">{{ vacancy.vacancy_title }}</h5>
+            <p class="card-text">{{ vacancy.description }}</p>
+            <a href="{{ vacancy.link }}" class="btn btn-primary btn-sm float-end">Apply Now</a>
           </div>
         </div>
       </div>
-      <div class="col-md-12">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5 class="card-title">Data Analyst</h5>
-            <p class="card-text">We are seeking a talented data analyst proficient in SQL and data visualization tools.</p>
-            <a href="#" class="btn btn-primary btn-sm float-end">Apply Now</a>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-12">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5 class="card-title">Web Designer</h5>
-            <p class="card-text">We are looking for a creative web designer with experience in HTML, CSS, and JavaScript.</p>
-            <a href="#" class="btn btn-primary btn-sm float-end">Apply Now</a>
-          </div>
-        </div>
-      </div>
+      {% empty %}
+          <li>No vacancies found.</li>
+      {% endfor %}
     </div>
 </div>  
 {% endblock %}
